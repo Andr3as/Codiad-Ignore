@@ -91,7 +91,7 @@
         
         setIgnore: function() {
             var obj     = {};
-            obj. range  = $('#ignore_range').val();
+            obj.range   = $('.ignore_range').val();
             if (obj.range == "file") {
                 obj.name    = this.ignorePath;
             } else if (obj.range == "name") {
