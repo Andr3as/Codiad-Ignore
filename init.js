@@ -50,7 +50,8 @@
                                 result = false;
                             }
                         } else if (rule.range == "type") {
-                            if (ext == rule.name) {
+                            var tExt = new RegExp(rule.name.replace("*", "") + "$");
+                            if (tExt.test(fPath)) {
                                 result = false;
                             }
                         }
@@ -66,10 +67,20 @@
             });
         },
         
+        //////////////////////////////////////////////////////////
+        //
+        //  Show dialog with a log of every rule
+        //
+        //////////////////////////////////////////////////////////
         showDialog: function() {
             codiad.modal.load(500, this.path+"dialog.php?action=log");
         },
         
+        //////////////////////////////////////////////////////////
+        //
+        //  Test if ignorePath is a directory
+        //
+        //////////////////////////////////////////////////////////
         isDir: function() {
             $.getJSON(this.path+"controller.php?action=isDir&path="+this.ignorePath, function(json){
                 var type = "";
@@ -84,11 +95,25 @@
             });
         },
         
+        //////////////////////////////////////////////////////////
+        //
+        //  Show dialog to choose ignore range
+        //
+        //  Parameter
+        //
+        //  path - {String} - File path
+        //
+        //////////////////////////////////////////////////////////
         ignore: function(path) {
             codiad.modal.load(300, this.path+"dialog.php?action=ignore");
             this.ignorePath = path;
         },
         
+        //////////////////////////////////////////////////////////
+        //
+        //  Add new ignore rule of ignore dialog
+        //
+        //////////////////////////////////////////////////////////
         setIgnore: function() {
             var obj     = {};
             obj.range   = $('.ignore_range').val();
@@ -97,7 +122,7 @@
             } else if (obj.range == "name") {
                 obj.name    = this.getName(this.ignorePath);
             } else {
-                obj.name    = this.getExtension(this.ignorePath);
+                obj.name    = "*."+this.getExtension(this.ignorePath);
             }
             this.ignoreData.push(obj);
             this.save();
@@ -105,6 +130,11 @@
             codiad.modal.unload();
         },
         
+        //////////////////////////////////////////////////////////
+        //
+        //  Load current rules
+        //
+        //////////////////////////////////////////////////////////
         load: function() {
             var _this = this;
             $.getJSON(this.path+"controller.php?action=load", function(json){
@@ -112,6 +142,11 @@
             });
         },
         
+        //////////////////////////////////////////////////////////
+        //
+        //  Save current rules
+        //
+        //////////////////////////////////////////////////////////
         save: function() {
             var _this = this;
             $.post(this.path+"controller.php?action=save", {data: JSON.stringify(_this.ignoreData)}, function(data){
@@ -122,6 +157,11 @@
             });
         },
         
+        //////////////////////////////////////////////////////////
+        //
+        //  Add current rules to log dialog
+        //
+        //////////////////////////////////////////////////////////
         loadDialog: function() {
             var _this = this;
             var line;
@@ -135,6 +175,11 @@
             });
         },
         
+        //////////////////////////////////////////////////////////
+        //
+        //  Add new rule to log dialog
+        //
+        //////////////////////////////////////////////////////////
         addRule: function() {
             var number  = this.entries++;
             var line    = this.line.replace(new RegExp("__line__", "g"), number);
@@ -143,6 +188,11 @@
             return number;
         },
         
+        //////////////////////////////////////////////////////////
+        //
+        //  Save rule of log dialog
+        //
+        //////////////////////////////////////////////////////////
         saveDialog: function() {
             var _this   = this;
             var buf     = [];
@@ -160,6 +210,11 @@
             codiad.filemanager.rescan(codiad.project.getCurrent());
         },
         
+        //////////////////////////////////////////////////////////
+        //
+        //  Activate delete button of log dialog
+        //
+        //////////////////////////////////////////////////////////
         setDelete: function(){
             $('.ignore_remove').click(function(){
                 var line = $(this).attr("data-line");
@@ -168,14 +223,50 @@
             });
         },
         
+        //////////////////////////////////////////////////////////
+        //
+        //  Display help dialog
+        //
+        //////////////////////////////////////////////////////////
+        help: function() {
+            codiad.modal.load(this.path+"dialog.php?action=help");
+        },
+        
+        //////////////////////////////////////////////////////////
+        //
+        //  Get directory of file
+        //
+        //  Parameter
+        //
+        //  path - {String} - File path
+        //
+        //////////////////////////////////////////////////////////
         getDir: function(path) {
             return path.substring(0, path.lastIndexOf("/"));
         },
         
+        //////////////////////////////////////////////////////////
+        //
+        //  Get file name
+        //
+        //  Parameter
+        //
+        //  path - {String} - File path
+        //
+        //////////////////////////////////////////////////////////
         getName: function(path) {
             return path.substring(path.lastIndexOf("/")+1);
         },
         
+        //////////////////////////////////////////////////////////
+        //
+        //  Get extension of file
+        //
+        //  Parameter
+        //
+        //  path - {String} - File path
+        //
+        //////////////////////////////////////////////////////////
         getExtension: function(path) {
             return path.substring(path.lastIndexOf(".")+1);
         }

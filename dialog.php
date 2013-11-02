@@ -32,12 +32,40 @@
                     <td></td>
                 </tr>
             </table>
-            <p>INFO: A single file has to given by its path, to ignore a file in every project give its name, and to ignore it generally give its extension without point.</p>
             <button onclick="codiad.Ignore.saveDialog(); return false;">Save and Close</button>
             <button onclick="codiad.Ignore.addRule(); return false;">Add new rule</button>
+            <button onclick="codiad.Ignore.help(); return false;">Help</button>
             <script>
                 codiad.Ignore.loadDialog();
             </script>
+        </div>
+    <?php
+        } else if ($_GET['action'] == "help") {
+    ?>
+        <div class="ignore_help">
+            <label>Ignore - Help</label>
+            <table>
+                <tr>
+                    <td>Syntax</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Just this file:</td>
+                    <td>Path of the file in the workspace, f.e. Ignore/README.md</td>
+                </tr>
+                <tr>
+                    <td>Files with the same name:</td>
+                    <td>Name of the file, f.e. README.md</td>
+                </tr>
+                <tr>
+                    <td>Files with the same extension:</td>
+                    <td>Extension of files, f.e. *.php</td>
+                </tr>
+                <tr>
+                    <th colspan="2">Same rules for directories.</th>
+                </tr>
+            </table>
+            <button onclick="codiad.Ignore.showDialog(); return false;">Close</button>
         </div>
     <?php
         }
