@@ -229,7 +229,7 @@
         //
         //////////////////////////////////////////////////////////
         help: function() {
-            codiad.modal.load(this.path+"dialog.php?action=help");
+            codiad.modal.load(400, this.path+"dialog.php?action=help");
         },
         
         //////////////////////////////////////////////////////////
