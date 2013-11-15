@@ -32,7 +32,7 @@
                 _this.line = html;
             });
             //Subscribe
-            amplify.subscribe("file-manager.onIndex", function(path){
+            amplify.subscribe("filemanager.onIndex", function(path){
                 var buf = [];
                 var fPath, result, ext, name;
                 $.each(codiad.filemanager.indexFiles, function(i, item){
