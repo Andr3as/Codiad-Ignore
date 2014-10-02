@@ -12,7 +12,11 @@
     
     switch($_GET['action']){
         case 'load':
-            echo json_encode(getJSON(getFileName(), "config"));
+            if (file_exists(DATA . "/config/" . getFileName())) {
+                echo json_encode(getJSON(getFileName(), "config"));
+            } else {
+                echo json_encode(array());
+            }
             break;
             
         case 'save':
@@ -45,10 +49,10 @@
     }
     
     function getWorkspacePath($path) {
-		//Security check
-		if (!Common::checkPath($path)) {
-			die('{"status":"error","message":"Invalid path"}');
-		}
+        //Security check
+        if (!Common::checkPath($path)) {
+            die('{"status":"error","message":"Invalid path"}');
+        }
         if (strpos($path, "/") === 0) {
             //Unix absolute path
             return $path;
