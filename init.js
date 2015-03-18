@@ -65,6 +65,11 @@
                 });
                 codiad.filemanager.indexFiles = buf;
             });
+            amplify.subscribe('settings.dialog.save', function(){
+                if ($('.ignore_display').length > 0) {
+                    codiad.Ignore.saveDialog();
+                }
+            });
         },
         
         //////////////////////////////////////////////////////////
@@ -73,7 +78,8 @@
         //
         //////////////////////////////////////////////////////////
         showDialog: function() {
-            codiad.modal.load(500, this.path+"dialog.php?action=log");
+            var path = this.path.substring(this.path.indexOf(window.location.pathname)) + "dialog.php?action=log";
+            codiad.settings.show(path);
         },
         
         //////////////////////////////////////////////////////////
@@ -170,9 +176,6 @@
                 $('.ignore_rule_name[data-line="'+line+'"]').val(item.name);
                 $('.ignore_range[data-line="'+line+'"]').val(item.range);
             });
-            $('.ignore_display').css('max-height', function(){
-                return 0.6*window.innerHeight + "px";
-            });
         },
         
         //////////////////////////////////////////////////////////
@@ -206,7 +209,6 @@
             });
             this.ignoreData = buf;
             this.save();
-            codiad.modal.unload();
             codiad.filemanager.rescan(codiad.project.getCurrent());
         },
         

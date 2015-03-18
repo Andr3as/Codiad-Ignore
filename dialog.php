@@ -25,6 +25,8 @@
         } else if ($_GET['action'] == "log") {
     ?>
         <div class="ignore_display">
+            <label><span class="icon-target big-icon"></span>Ignore Settings</label>
+            <hr>
             <table id="ignore_list">
                 <tr>
                     <td>Path/Name/Extension</td>
@@ -32,7 +34,7 @@
                     <td></td>
                 </tr>
             </table>
-            <button onclick="codiad.Ignore.saveDialog(); return false;">Save and Close</button>
+            <br>
             <button onclick="codiad.Ignore.addRule(); return false;">Add new rule</button>
             <button onclick="codiad.Ignore.help(); return false;">Help</button>
             <script>

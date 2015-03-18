@@ -1,6 +1,5 @@
 .ignore_display {
     overflow-y: scroll;
-    width: 500px;
 }
 
 #ignore_list td {
