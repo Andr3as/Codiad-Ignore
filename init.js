@@ -50,7 +50,7 @@
                                 result = false;
                             }
                         } else if (rule.range == "type") {
-                            var tExt = new RegExp(rule.name.replace("*", "") + "$");
+                            var tExt = new RegExp(rule.name.replace("*", "").replace(".", "\\.") + "$");
                             if (tExt.test(fPath)) {
                                 result = false;
                             }
